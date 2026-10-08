@@ -11,16 +11,27 @@ st.title("❤️ Heart Disease Risk Predictor")
 st.write("Enter patient attributes to predict heart disease risk using the trained model.")
 
 # --- 1. Load trained model ---
-MODEL_PATH = os.path.join("..", "models", "final_model.pkl")
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+def first_existing(*paths):
+    """Return the first path that exists, so the app runs from the repo root or the original folder layout."""
+    for p in paths:
+        if os.path.exists(p):
+            return p
+    return paths[0]
+
+MODEL_PATH = first_existing(os.path.join(HERE, "final_model.pkl"),
+                            os.path.join(HERE, "..", "models", "final_model.pkl"))
 if not os.path.exists(MODEL_PATH):
-    st.error("❌ Model not found at ../models/final_model.pkl.\nPlease train and export the model first (run your notebook).")
+    st.error("❌ Model file final_model.pkl not found.\nPlease train and export the model first (run 04_supervised_learning.ipynb).")
     st.stop()
 
 model = load(MODEL_PATH)
 
 # --- 2. Column names (same as in notebooks) ---
 # Use same feature set used for training
-DATA_PATH = os.path.join("..", "data", "heart_disease.data")
+DATA_PATH = first_existing(os.path.join(HERE, "heart_disease.data"),
+                           os.path.join(HERE, "..", "data", "heart_disease.data"))
 if os.path.exists(DATA_PATH):
     # Read .data without headers and assign names as done in notebooks
     df = pd.read_csv(DATA_PATH, header=None)
