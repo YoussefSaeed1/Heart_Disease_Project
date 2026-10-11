@@ -1,0 +1,248 @@
+{
+  "rows": 303,
+  "passed": true,
+  "errors": 0,
+  "warnings": 2,
+  "checks": [
+    {
+      "name": "all 14 columns present",
+      "severity": "error",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "diagnosis (num) present and 0-4",
+      "severity": "error",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "no duplicate patients",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "age has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "trestbps has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "chol has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "thalach has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "oldpeak has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "ca has no missing values",
+      "severity": "warning",
+      "passed": false,
+      "failing_rows": 4,
+      "detail": "imputed in the pipeline",
+      "examples": []
+    },
+    {
+      "name": "sex has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "cp has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "fbs has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "restecg has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "exang has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "slope has no missing values",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "thal has no missing values",
+      "severity": "warning",
+      "passed": false,
+      "failing_rows": 2,
+      "detail": "imputed in the pipeline",
+      "examples": []
+    },
+    {
+      "name": "age within 18-100",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "trestbps within 70-250",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "chol within 80-700",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "thalach within 50-230",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "oldpeak within 0-10",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "ca within 0-3",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "sex uses known codes [0, 1]",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "cp uses known codes [1, 2, 3, 4]",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "fbs uses known codes [0, 1]",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "restecg uses known codes [0, 1, 2]",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "exang uses known codes [0, 1]",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "slope uses known codes [1, 2, 3]",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "thal uses known codes [3, 6, 7]",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "",
+      "examples": []
+    },
+    {
+      "name": "classes are balanced enough (30-70% disease)",
+      "severity": "warning",
+      "passed": true,
+      "failing_rows": 0,
+      "detail": "46% with disease",
+      "examples": []
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+.pytest_cache/
+.DS_Store
+# The model is rebuilt with `python -m heart_disease.train` (the app does it on first run)
+models/*.joblib

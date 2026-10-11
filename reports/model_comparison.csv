@@ -1,0 +1,6 @@
+,cv_auc_mean,cv_auc_std,test_roc_auc,test_accuracy,test_precision,test_recall,test_specificity,test_f1,test_brier
+Baseline (always 'no disease' rate),0.5000,0.0000,0.5000,0.5410,0.0000,0.0000,1.0000,0.0000,0.2483
+Logistic Regression,0.8991,0.0341,0.9589,0.8852,0.8387,0.9286,0.8485,0.8814,0.0844
+Random Forest,0.8949,0.0335,0.9535,0.8852,0.8387,0.9286,0.8485,0.8814,0.0992
+Gradient Boosting,0.8699,0.0400,0.9632,0.9016,0.8667,0.9286,0.8788,0.8966,0.0831
+SVM (RBF),0.8825,0.0379,0.9610,0.8852,0.8387,0.9286,0.8485,0.8814,0.0853

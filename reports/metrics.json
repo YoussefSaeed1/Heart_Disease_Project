@@ -1,0 +1,86 @@
+{
+  "patients": 303,
+  "disease_share": 0.45874587458745875,
+  "train_rows": 242,
+  "test_rows": 61,
+  "cv": "5-fold stratified, repeated 10 times, training set only",
+  "best_model": "Logistic Regression",
+  "models": {
+    "Baseline (always 'no disease' rate)": {
+      "cv_auc_mean": 0.5,
+      "cv_auc_std": 0.0,
+      "test_roc_auc": 0.5,
+      "test_accuracy": 0.5409836065573771,
+      "test_precision": 0.0,
+      "test_recall": 0.0,
+      "test_specificity": 1.0,
+      "test_f1": 0.0,
+      "test_brier": 0.2483204587163154
+    },
+    "Logistic Regression": {
+      "cv_auc_mean": 0.8990786910352127,
+      "cv_auc_std": 0.034106950158621585,
+      "test_roc_auc": 0.958874458874459,
+      "test_accuracy": 0.8852459016393442,
+      "test_precision": 0.8387096774193549,
+      "test_recall": 0.9285714285714286,
+      "test_specificity": 0.8484848484848485,
+      "test_f1": 0.8813559322033898,
+      "test_brier": 0.08441543884430208
+    },
+    "Random Forest": {
+      "cv_auc_mean": 0.894904676643807,
+      "cv_auc_std": 0.03349316742801928,
+      "test_roc_auc": 0.9534632034632036,
+      "test_accuracy": 0.8852459016393442,
+      "test_precision": 0.8387096774193549,
+      "test_recall": 0.9285714285714286,
+      "test_specificity": 0.8484848484848485,
+      "test_f1": 0.8813559322033898,
+      "test_brier": 0.09920520194729035
+    },
+    "Gradient Boosting": {
+      "cv_auc_mean": 0.869873652917131,
+      "cv_auc_std": 0.03997474203605953,
+      "test_roc_auc": 0.9632034632034632,
+      "test_accuracy": 0.9016393442622951,
+      "test_precision": 0.8666666666666667,
+      "test_recall": 0.9285714285714286,
+      "test_specificity": 0.8787878787878788,
+      "test_f1": 0.896551724137931,
+      "test_brier": 0.08306335226048135
+    },
+    "SVM (RBF)": {
+      "cv_auc_mean": 0.8825004785874352,
+      "cv_auc_std": 0.03785929176467068,
+      "test_roc_auc": 0.9610389610389611,
+      "test_accuracy": 0.8852459016393442,
+      "test_precision": 0.8387096774193549,
+      "test_recall": 0.9285714285714286,
+      "test_specificity": 0.8484848484848485,
+      "test_f1": 0.8813559322033898,
+      "test_brier": 0.0852776786954298
+    }
+  },
+  "best_test_confusion": {
+    "tn": 28,
+    "fp": 5,
+    "fn": 2,
+    "tp": 26
+  },
+  "permutation_importance": {
+    "ca": 0.0804545454545456,
+    "cp": 0.031818181818181926,
+    "exang": 0.012792207792207879,
+    "oldpeak": 0.012121212121212248,
+    "thal": 0.01209956709956721,
+    "slope": 0.01138528138528149,
+    "thalach": 0.008311688311688416,
+    "trestbps": 0.006190476190476279,
+    "sex": 0.004437229437229533,
+    "age": 0.0012554112554112762,
+    "restecg": 0.0007142857142858006,
+    "fbs": 0.0004978354978355393,
+    "chol": -0.0018181818181817523
+  }
+}

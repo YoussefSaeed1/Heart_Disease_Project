@@ -1,79 +1,58 @@
-# --- Heart Disease Risk Predictor App ---
-import os
-import pandas as pd
-import numpy as np
-import streamlit as st
-from joblib import load
+"""Heart Disease Risk Predictor (Streamlit).
 
-# ---------------- CONFIG ----------------
+Run:  streamlit run app.py
+The app trains and saves the model on first run if models/heart_disease_model.joblib is missing.
+"""
+
+import sys
+from pathlib import Path
+
+import streamlit as st
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
+from heart_disease import config  # noqa: E402
+from heart_disease.predict import load_model, predict_proba  # noqa: E402
+from heart_disease.validate import check_inputs  # noqa: E402
+
 st.set_page_config(page_title="Heart Disease Risk", page_icon="❤️", layout="centered")
 st.title("❤️ Heart Disease Risk Predictor")
-st.write("Enter patient attributes to predict heart disease risk using the trained model.")
+st.caption("Logistic regression trained on the UCI Cleveland dataset (303 patients). For learning only, not a diagnostic tool.")
 
-# --- 1. Load trained model ---
-HERE = os.path.dirname(os.path.abspath(__file__))
+model = st.cache_resource(load_model)()
 
-def first_existing(*paths):
-    """Return the first path that exists, so the app runs from the repo root or the original folder layout."""
-    for p in paths:
-        if os.path.exists(p):
-            return p
-    return paths[0]
 
-MODEL_PATH = first_existing(os.path.join(HERE, "final_model.pkl"),
-                            os.path.join(HERE, "..", "models", "final_model.pkl"))
-if not os.path.exists(MODEL_PATH):
-    st.error("❌ Model file final_model.pkl not found.\nPlease train and export the model first (run 04_supervised_learning.ipynb).")
-    st.stop()
+def coded(col):
+    codes = config.CODES[col]
+    return st.selectbox(config.LABELS[col], list(codes), format_func=lambda k: f"{codes[k]} ({k})")
 
-model = load(MODEL_PATH)
 
-# --- 2. Column names (same as in notebooks) ---
-# Use same feature set used for training
-DATA_PATH = first_existing(os.path.join(HERE, "heart_disease.data"),
-                           os.path.join(HERE, "..", "data", "heart_disease.data"))
-if os.path.exists(DATA_PATH):
-    # Read .data without headers and assign names as done in notebooks
-    df = pd.read_csv(DATA_PATH, header=None)
-    df.columns = [
-        "age","sex","cp","trestbps","chol","fbs","restecg",
-        "thalach","exang","oldpeak","slope","ca","thal","num"
-    ]
-    # Create binary target like notebooks and drop 'num'
-    df["target"] = (df["num"] > 0).astype(int)
-    df = df.drop(columns=["num"])
-    X_cols = [c for c in df.columns if c != "target"]
-else:
-    # fallback if data is missing
-    X_cols = ["age","sex","cp","trestbps","chol","fbs","restecg",
-              "thalach","exang","oldpeak","slope","ca","thal"]
+with st.form("patient"):
+    c1, c2 = st.columns(2)
+    with c1:
+        age = st.number_input(config.LABELS["age"], 18, 100, 55)
+        sex = coded("sex")
+        cp = coded("cp")
+        trestbps = st.number_input(config.LABELS["trestbps"], 70, 250, 130)
+        chol = st.number_input(config.LABELS["chol"], 80, 700, 245)
+        fbs = coded("fbs")
+        restecg = coded("restecg")
+    with c2:
+        thalach = st.number_input(config.LABELS["thalach"], 50, 230, 150)
+        exang = coded("exang")
+        oldpeak = st.number_input(config.LABELS["oldpeak"], 0.0, 10.0, 1.0, step=0.1)
+        slope = coded("slope")
+        ca = st.selectbox(config.LABELS["ca"], [0, 1, 2, 3])
+        thal = coded("thal")
+    submitted = st.form_submit_button("Estimate risk")
 
-# --- 3. Build input form ---
-inputs = {}
-with st.form("heart_form"):
-    st.subheader("Patient Inputs")
-    for c in X_cols:
-        # Use selectboxes for categorical-like fields for safer input
-        if c in ["sex"]:
-            val = st.selectbox(f"{c} (0=female,1=male)", [0,1])
-        elif c in ["cp"]:
-            val = st.selectbox(f"{c} (chest pain type 0-3)", [0,1,2,3])
-        elif c in ["fbs","restecg","exang","slope","ca","thal"]:
-            val = st.selectbox(f"{c}", [0,1,2,3])
-        else:
-            val = st.number_input(f"{c}", value=0.0, step=1.0)
-        inputs[c] = val
-    submitted = st.form_submit_button("Predict")
-
-# --- 4. Make prediction ---
 if submitted:
-    X_row = pd.DataFrame([inputs])
-    try:
-        proba = model.predict_proba(X_row)[:,1][0]
-    except AttributeError:
-        st.error("Loaded model does not support predict_proba. Retrain using a classifier with probability estimates.")
-        st.stop()
-
-    pred = int(proba >= 0.5)
-    st.metric("Predicted Probability", f"{proba:.3f}")
-    st.write("**Prediction:**", "❤️ **Heart Disease**" if pred==1 else "✅ **No Heart Disease**")
+    row = dict(age=age, sex=sex, cp=cp, trestbps=trestbps, chol=chol, fbs=fbs, restecg=restecg, thalach=thalach,
+               exang=exang, oldpeak=oldpeak, slope=slope, ca=ca, thal=thal)
+    for msg in check_inputs(row):
+        st.warning(msg)
+    p = float(predict_proba([row], model)[0])
+    st.metric("Estimated probability of heart disease", f"{p:.0%}")
+    if p >= 0.5:
+        st.error("Above the 50% threshold: the model would flag this patient for follow-up.")
+    else:
+        st.success("Below the 50% threshold.")
