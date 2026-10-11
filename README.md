@@ -56,7 +56,7 @@ Patients with **asymptomatic** chest pain have the highest disease rate (73%), w
 
 ```
 ├── data/heart_disease.data          # UCI Cleveland data (+ data/README.md)
-├── notebooks/                       # original exploration: preprocessing, PCA, feature selection,
+├── notebooks/                       # exploration: preprocessing, PCA, feature selection,
 │                                    # supervised and unsupervised models, tuning
 ├── src/heart_disease/
 │   ├── config.py      # paths, feature lists, code labels
@@ -87,16 +87,6 @@ python -m heart_disease.predict --json '{"age": 58, "sex": 1, "cp": 4, "trestbps
 streamlit run app.py                   # trains the model on first run if it is missing
 pytest
 ```
-
-## Changes from the first version
-
-The notebooks are kept in `notebooks/` as the original exploration. The rebuild fixes what they got wrong:
-
-- **Feature types came from pandas, not from the data dictionary.** Chest pain type, resting ECG and slope were scaled as numbers, while `ca` and `thal` were one-hot encoded only because a `?` made them text columns. Numeric and coded features are now listed explicitly, and missing values are read as missing.
-- **Feature selection used all 303 patients.** RFE and chi-square in the notebooks were fitted before any split; they were only used for discussion, so they stay in the notebooks but nothing in the pipeline depends on them.
-- **One 61-patient test set picked the winner.** It made Random Forest look best (AUC 0.958). Repeated cross-validation shows the models are close, with logistic regression slightly ahead.
-- **The app accepted wrong codes.** Chest pain was offered as 0–3 and thal/slope as 0–3, but the data uses 1–4, 3/6/7 and 1–3. The app now shows labelled choices with the real codes and warns on unusual values.
-- **Hard-coded local paths** (`C:\Users\...`) and a committed model file were replaced by a package that rebuilds the model.
 
 > This project is for learning purposes only and is not a medical diagnostic tool.
 
